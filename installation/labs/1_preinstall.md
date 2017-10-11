@@ -25,7 +25,6 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDiEtf/5fUtRZ+CbtfTLbbgSPRhsWQiV3oL+3TQbyk
 ssh ip-172-31-90-35
 ssh ip-172-31-95-78
 ssh ip-172-31-86-146
-rm -rf /data /data0 /dfs
 ssh ip-172-31-87-246
 ssh ip-172-31-89-87
 
