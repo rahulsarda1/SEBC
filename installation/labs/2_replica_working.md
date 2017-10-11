@@ -1,23 +1,23 @@
-# Install MariaDB
+# Install MariaDB on following nodes
+```sh
 ssh ip-172-31-90-35
 ssh ip-172-31-95-78
-
+```
 # Configure MariaDB with a replica server
+
 ## Install MariaDB in both master node and replica node
 
+```sh
 sudo yum -y install mariadb-server
-..
-Complete!
-
 sudo service mariadb stop
 mkdir mysql_backup
 mv /var/lib/mysql/ib_logfile0 ~/mysql_backup/.
 mv /var/lib/mysql/ib_logfile1 ~/mysql_backup/.
 sudo vi /etc/my.cnf
 ```
-Insert the following into the conf file for the replica. The same can be used for the master, with the only difference in the server_id value, which should be set to 1.
+## Insert the following into the conf file for the replica. The same can be used for the master, with the only difference in the server_id value, which should be set to 1.
 
-```
+```sh
 [mysqld]
 transaction-isolation = READ-COMMITTED
 # Disabling symbolic-links is recommended to prevent assorted security risks;
@@ -60,10 +60,9 @@ innodb_log_file_size = 512M
 [mysqld_safe]
 log-error=/var/log/mariadb/mariadb.log
 pid-file=/var/run/mariadb/mariadb.pid
-
 ```
-Enable the mariadb service again
-```
+## Enable the mariadb service again
+```sh
 sudo systemctl enable mariadb
 Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.
 
@@ -74,7 +73,7 @@ sudo service mariadb start
 Redirecting to /bin/systemctl start  mariadb.service
 
 sudo systemctl status mariadb.service
-
+```
 ● mariadb.service - MariaDB database server
 Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; vendor preset: disabled)
 Active: active (running) since Mon 2017-10-09 22:43:08 EDT; 9s ago
@@ -96,9 +95,10 @@ Oct 09 22:42:49 ip-172-31-95-76.ec2.internal mysqld_safe[9951]: 171009 22:42:49 
 Oct 09 22:42:49 ip-172-31-95-76.ec2.internal mysqld_safe[9951]: 171009 22:42:49 mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
 Oct 09 22:43:08 ip-172-31-95-76.ec2.internal systemd[1]: Started MariaDB database server.
 
-```
-Setting up MariaDB
-```
+
+## Setting up Secure installation
+
+```sh
 sudo /usr/bin/mysql_secure_installation
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
@@ -160,12 +160,11 @@ All done!  If you've completed all of the above steps, your MariaDB
 installation should now be secure.
 
 Thanks for using MariaDB!
-
 ```
 
-Setting up MariaDB databases, roles and user grants
+## Setting up MariaDB databases, roles and user grants ( Issue - each user should be different for different database )
 
-```
+```sh
 mysql -u root -p
 
 Enter password:
@@ -202,9 +201,9 @@ grant all on amon.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
 
 FLUSH PRIVILEGES;
 ```
-Setting up Master
+## Setting up Master details
 
-```
+```sh
 MariaDB [(none)]> SHOW GRANTS FOR mariadbuser
 +------------------------------------------------------------------------------------------------------------+
 | Grants for mariadbuser@%                                                                                   |
@@ -244,12 +243,12 @@ MariaDB [(none)]> SHOW MASTER STATUS;
 1 row in set (0.00 sec)
 
 # Master script post setting up replica
-
 UNLOCK TABLES;
+```
 
-# Setting up Replica
+# Setting up Replica (issue yet to setup the replica correctly)
 
-
+```sh
 MariaDB [(none)]> SHOW VARIABLES LIKE 'server_id';
 +---------------+-------+
 | Variable_name | Value |
@@ -309,6 +308,5 @@ Master_Server_Id: 0
 
 MariaDB [(none)]> exit
 Bye
-```
 ```
 
