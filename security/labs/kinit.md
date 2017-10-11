@@ -18,6 +18,7 @@ mv rahulsarda1.user.keytab /etc/security/keytabs/.
 ## Provide rights to the file for the user
 ```sh
 chown rahulsarda1 rahulsarda1-user.keytab
+chmod 400 rahulsarda1-user.keytab
 ```
 ## Login  and perform kinit and klist commands
 ```sh
@@ -31,6 +32,7 @@ Valid starting       Expires              Service principal
 10/11/2017 19:31:49  10/12/2017 19:31:49  krbtgt/CDHBOOTCAMP.COM@CDHBOOTCAMP.COM
 renew until 10/18/2017 19:31:49
 ```
+
 
 
 
