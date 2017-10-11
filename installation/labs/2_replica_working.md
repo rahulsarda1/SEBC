@@ -1,4 +1,6 @@
 # Install MariaDB
+ssh ip-172-31-90-35
+ssh ip-172-31-95-78
 
 # Configure MariaDB with a replica server
 ## Install MariaDB in both master node and replica node
@@ -185,7 +187,7 @@ create database hue DEFAULT CHARACTER SET utf8;
 create database cmdb DEFAULT CHARACTER SET utf8;
 create database oozie DEFAULT CHARACTER SET utf8;
 
-CREATE USER 'mariadbuser'@'ip-172-31-91-58.internal' identified by 'mariadb';
+CREATE USER 'mariadbuser'@'ip-172-31-90-35.ec2.internal' identified by 'mariadb';
 
 grant all on cmdb.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
 grant all on rman.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
@@ -195,6 +197,8 @@ grant all on nav.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
 grant all on navms.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
 grant all on oozie.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
 grant all on hue.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
+grant all on amon.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
+
 
 FLUSH PRIVILEGES;
 ```
@@ -218,7 +222,7 @@ MariaDB [(none)]> SHOW GRANTS FOR mariadbuser
 
 2 rows in set (0.00 sec)
 
-GRANT REPLICATION SLAVE ON *.* TO 'mariadbuser'@'ip-172-31-89-46.ec2.internal' IDENTIFIED BY 'mariadb';
+GRANT REPLICATION SLAVE ON *.* TO 'mariadbuser'@'ip-172-31-95-78.ec2.internal' IDENTIFIED BY 'mariadb';
 SET GLOBAL binlog_format = 'ROW';
 FLUSH TABLES WITH READ LOCK;
 
@@ -235,15 +239,17 @@ MariaDB [(none)]> SHOW MASTER STATUS;
 +-------------------------+----------+--------------+------------------+
 | File                    | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +-------------------------+----------+--------------+------------------+
-| mysql_binary_log.000004 |     4945 |              |                  |
+| mysql_binary_log.000003 |     5085 |              |                  |
 +-------------------------+----------+--------------+------------------+
 1 row in set (0.00 sec)
 
-```
+# Master script post setting up replica
 
-Setting up Replica
+UNLOCK TABLES;
 
-```
+# Setting up Replica
+
+
 MariaDB [(none)]> SHOW VARIABLES LIKE 'server_id';
 +---------------+-------+
 | Variable_name | Value |
@@ -253,7 +259,7 @@ MariaDB [(none)]> SHOW VARIABLES LIKE 'server_id';
 1 row in set (0.00 sec)
 
 stop slave;
-CHANGE MASTER TO MASTER_HOST='ip-172-31-91-58.ec2.internal' , MASTER_USER='mariadbuser', MASTER_PASSWORD='mariadb', MASTER_LOG_FILE=' mysql_binary_log.000003',MASTER_LOG_POS=4049;
+CHANGE MASTER TO MASTER_HOST='ip-172-31-95-78.ec2.internal' , MASTER_USER='mariadbuser', MASTER_PASSWORD='mariadb', MASTER_LOG_FILE='mysql_binary_log.000003',MASTER_LOG_POS=5262;
 start slave;
 
 show slave status;
@@ -305,3 +311,4 @@ MariaDB [(none)]> exit
 Bye
 ```
 ```
+

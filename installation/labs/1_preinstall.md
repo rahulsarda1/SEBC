@@ -1,14 +1,13 @@
 
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-158-233-109.compute-1.amazonaws.com [Main]
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-91-189-102.compute-1.amazonaws.com
 
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-210-247-0.compute-1.amazonaws.com
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-34-226-142-188.compute-1.amazonaws.com
 
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-90-76-165.compute-1.amazonaws.com
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-91-94-82.compute-1.amazonaws.com
 
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-91-87-42.compute-1.amazonaws.com
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-89-189-8.compute-1.amazonaws.com
 
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-34-227-163-74.compute-1.amazonaws.com
-
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-23-194-202.compute-1.amazonaws.com
 
 
 # Setup sshless access on all machines with public and private key for
@@ -23,18 +22,17 @@ vi /root/.ssh/authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDiEtf/5fUtRZ+CbtfTLbbgSPRhsWQiV3oL+3TQbyktFTJpwQNtCt1Z3rr0V7hk/2mOINDCqrUMfmagbcr8slFe5fp49AC30IhNrYB5ownfwrkaaujhR/Mw5SQv4eS0fbTCjOk8sIGsSsaws2fKNRtkmXTX3W3VMEqUZrmEgrho7KrP1131tLGvBcynpDAwMKspdDawyluhsU3tLdERGuHzoBTgLI5fP2xFHCG5h8qaBHtwKfu21dw9sTwflTs7b7n21OuEtRkMLyk6ZpeqKsexceOvGLAxWskkNxTgm568fwmJT9Mz58lCSGVt3QVbkRyKghkvulWKHKPzr9gtxuP root@ip-172-31-91-58.ec2.internal
 
 [main]
-ssh ip-172-31-91-58
-ssh ip-172-31-89-46
-ssh ip-172-31-87-35
-ssh ip-172-31-89-182
-ssh ip-172-31-93-20
+ssh ip-172-31-90-35
+ssh ip-172-31-95-78
+ssh ip-172-31-86-146
+rm -rf /data /data0 /dfs
+ssh ip-172-31-87-246
+ssh ip-172-31-89-87
 
 
 # 1. On each node as root [swappiness]
-sudo root
-Put an entry in
-vi /etc/sysctl.conf
-vm.swappiness = 1
+cat /proc/sys/vm/swappiness
+sudo sysctl -w vm.swappiness=1
 
 
 # 2. Currently Mounted File Systems - mount command
@@ -72,9 +70,25 @@ Current start of huge pages is disabled.
 [root@ip-172-31-81-159 ec2-user]# sysctl vm.nr_hugepages
 vm.nr_hugepages = 0
 
-For disabling huge pages we can create services file in systemmd  and then systemctl enable *.service file. Add following command to disable
+## To disable transparent hugepages on reboot, add the following commands to the /etc/rc.d/rc.local file on all cluster hosts: RHEL/CentOS 7.x:
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+
+## Add the following line
+GRUB_CMDLINE_LINUX options in the /etc/default/grub file:
 transparent_hugepage=never
-echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
+Run the following command:
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+
+## Disable the tuned Service
+If your cluster hosts are running RHEL/CentOS 7.x, disable the "tuned" service by running the following commands:
+Ensure that the tuned service is started, Turn the tuned service off, Ensure that there are no active profiles, Shutdown and disable the tuned service:
+systemctl start
+tuned-adm off
+tuned-adm list
+systemctl stop tuned
+systemctl disable tuned
 
 # 4. Network interface configuration for one machine
 [root@ip-172-31-81-159 ec2-user]# ifconfig
@@ -102,6 +116,11 @@ yum -y install bind*
 yum -y install wget
 yum -y install nscd
 yum -y install ntp
+service nscd start
+chkconfig nscd on
+service ntpd start
+chkconfig ntpd on
+
 yum -y install perl
 yum -y install libaio
 yum -y install createrepo
@@ -226,11 +245,11 @@ yum install cloudera-manager-daemons cloudera-manager-server
 
 # Install JDBC Connector
 
-ssh ip-172-31-91-58
-ssh ip-172-31-89-46
-ssh ip-172-31-87-35
-ssh ip-172-31-89-182
-ssh ip-172-31-93-20
+ssh ip-172-31-90-35
+ssh ip-172-31-95-78
+ssh ip-172-31-86-146
+ssh ip-172-31-87-246
+ssh ip-172-31-89-87
 
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.44.tar.gz
 tar zxvf mysql-connector-java-5.1.44.tar.gz
@@ -239,14 +258,14 @@ sudo cp mysql-connector-java-5.1.44/mysql-connector-java-5.1.44-bin.jar /usr/sha
 
 # Install JDK
 
-wget http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm?AuthParam=1507655469_c90472a279fd9f1ccd0a7a7f5f75e2df
-mv jdk-8u144-linux-x64.rpm?AuthParam=1507655469_c90472a279fd9f1ccd0a7a7f5f75e2df jdk-8u144-linux-x64.rpm
+wget http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.rpm?AuthParam=1507676333_5b53b6d787aac8472c4c5202e1d664f5
+mv jdk-8u144-linux-x64.rpm?AuthParam=1507676333_5b53b6d787aac8472c4c5202e1d664f5 jdk-8u144-linux-x64.rpm
 yum install jdk-8u144-linux-x64.rpm
 
 
 # Run Cloudera Manager Database Script
 
-sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql cmdb mariadbuser mariadb -h ip-172-31-81-224.ec2.internal
+sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql cmdb mariadbuser mariadb -h ip-172-31-90-35.ec2.internal
 
 # Start Cloudera Manager
 
