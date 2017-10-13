@@ -1,6 +1,6 @@
 # My Amazon Machines
 ```sh
-ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-91-189-102.compute-1.amazonaws.com
+ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-86-54-106.compute-1.amazonaws.com
 ssh -i "ClouderaRahul.pem" ec2-user@ec2-34-226-142-188.compute-1.amazonaws.com
 ssh -i "ClouderaRahul.pem" ec2-user@ec2-52-91-94-82.compute-1.amazonaws.com
 ssh -i "ClouderaRahul.pem" ec2-user@ec2-54-89-189-8.compute-1.amazonaws.com
@@ -71,6 +71,12 @@ tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,seclabel,size=36891
 [root@ip-172-31-81-159 ec2-user]# sysctl vm.nr_hugepages
 vm.nr_hugepages = 0
 ```
+
+ip-172-31-84-209.ec2.internal
+ip-172-31-88-148.ec2.internal
+ip-172-31-95-176.ec2.internal
+ip-172-31-83-106.ec2.internal
+ip-172-31-82-13.ec2.internal
 
 ## To disable transparent hugepages on reboot, add the following commands to the /etc/rc.d/rc.local file on all cluster hosts: RHEL/CentOS 7.x:
 ```sh
@@ -283,6 +289,8 @@ wget http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c
 mv jdk-8u144-linux-x64.rpm?AuthParam=1507676333_5b53b6d787aac8472c4c5202e1d664f5 jdk-8u144-linux-x64.rpm
 yum install jdk-8u144-linux-x64.rpm
 ```
+
+
 
 # Run Cloudera Manager Database Script
 ```sh

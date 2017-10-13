@@ -11,16 +11,16 @@
 ip-172-31-84-209.ec2.internal
 ip-172-31-88-148.ec2.internal
 ip-172-31-95-176.ec2.internal
-ip-172-31-82-13.ec2.internal
 ip-172-31-83-106.ec2.internal
-
+ip-172-31-82-13.ec2.internal
 ```
+
 ```sh
-ec2-54-159-183-237.compute-1.amazonaws.com
-ec2-34-227-16-63.compute-1.amazonaws.com
-ec2-52-87-206-163.compute-1.amazonaws.com
-ec2-52-206-173-219.compute-1.amazonaws.com
-ec2-34-207-65-78.compute-1.amazonaws.com
+ec2-34-203-243-182.compute-1.amazonaws.com
+ec2-52-91-69-236.compute-1.amazonaws.com
+ec2-34-207-162-78.compute-1.amazonaws.com
+ec2-52-207-186-139.compute-1.amazonaws.com
+ec2-54-165-121-153.compute-1.amazonaws.com
 ```
 # Public Address
 ```sh

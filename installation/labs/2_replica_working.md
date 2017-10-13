@@ -178,7 +178,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 create database amon DEFAULT CHARACTER SET utf8;
 create database rman DEFAULT CHARACTER SET utf8;
-create database metastore DEFAULT CHARACTER SET utf8;
+create database hive DEFAULT CHARACTER SET utf8;
 create database sentry DEFAULT CHARACTER SET utf8;
 create database nav DEFAULT CHARACTER SET utf8;
 create database navms DEFAULT CHARACTER SET utf8;
@@ -186,17 +186,27 @@ create database hue DEFAULT CHARACTER SET utf8;
 create database cmdb DEFAULT CHARACTER SET utf8;
 create database oozie DEFAULT CHARACTER SET utf8;
 
-CREATE USER 'mariadbuser'@'ip-172-31-90-35.ec2.internal' identified by 'mariadb';
+https://www.cloudera.com/documentation/enterprise/5-5-x/topics/install_cm_mariadb.html
 
-grant all on cmdb.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on rman.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on metastore.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on sentry.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on nav.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on navms.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on oozie.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on hue.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
-grant all on amon.* TO 'mariadbuser'@'%' IDENTIFIED BY 'mariadb';
+CREATE USER 'amon'@'%' identified by 'mariadb';
+CREATE USER 'rman'@'%' identified by 'mariadb';
+CREATE USER 'hive'@'%' identified by 'mariadb';
+CREATE USER 'sentry'@'%' identified by 'mariadb';
+CREATE USER 'nav'@'%' identified by 'mariadb';
+CREATE USER 'navms'@'%' identified by 'mariadb';
+CREATE USER 'hue'@'%' identified by 'mariadb';
+CREATE USER 'cmdb'@'%' identified by 'mariadb';;
+CREATE USER 'oozie'@'%' identified by 'mariadb'
+
+grant all on amon.* TO 'amon'@'%' IDENTIFIED BY 'mariadb';
+grant all on rman.* TO 'rman'@'%' IDENTIFIED BY 'mariadb';
+grant all on hive.* TO 'hive'@'%' IDENTIFIED BY 'mariadb';
+grant all on sentry.* TO 'sentry'@'%' IDENTIFIED BY 'mariadb';
+grant all on nav.* TO 'nav'@'%' IDENTIFIED BY 'mariadb';
+grant all on navms.* TO 'navms'@'%' IDENTIFIED BY 'mariadb';
+grant all on hue.* TO 'hue'@'%' IDENTIFIED BY 'mariadb';
+grant all on cmdb.* TO 'cmdb'@'%' IDENTIFIED BY 'mariadb';
+grant all on oozie.* TO 'oozie'@'%' IDENTIFIED BY 'mariadb';
 
 
 FLUSH PRIVILEGES;
