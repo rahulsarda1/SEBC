@@ -329,6 +329,9 @@ gpgcheck=1
 # Install the database client package and JDBC connector jar on all node
 
 ## Database Client
+```sh
+[root@ip-172-31-84-209 ec2-user]# for i in `cat hosts`; do echo $i; ssh $i "yum install mariadb -y";done
+```
 
 ## JDBC Connector
 ### Run below script on all the nodes
