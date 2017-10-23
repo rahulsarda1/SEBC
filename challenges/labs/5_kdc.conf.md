@@ -7,3 +7,4 @@
 cloudera-scm@RAHULSARDA1.TX admilc
 ```
 
+#### @mfernest: Incomplete file content: kadm5.conf omitted
