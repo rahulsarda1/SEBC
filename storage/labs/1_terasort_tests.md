@@ -39,22 +39,19 @@ cd /opt/cloudera/parcels/CDH-5.9.3-1.cdh5.9.3.p0.4/lib/hadoop-mapreduce
 
 ```
 
-
-
 # Teragen Example
+```
 sudo -u hdfs time hadoop jar /opt/cloudera/parcels/CDH-5.9.3-1.cdh5.9.3.p0.4/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar teragen -Ddfs.block.size=33554432  -Dmapreduce.job.maps=4 100000000 /user/rahulsarda1/teragen
-
+```
 Argument 1: Number of 100 bytes rows ( 10,000,000,00 ), which is 100GB in this example.
-
 Argument 2: Generated data will be dropped in the HDFS path entered
-
 Argument 3: Block size
-
 Argument 4: Number of map tasks
 
 TeraGen will run map tasks to generate the data and will not run any reduce tasks. The default number of map task is defined by the "mapred.reduce.tasks=2" param. It's the only purpose here is to generate the 100GB of random data in the following format "10 bytes key | 2 bytes break | 32 bytes acsii/hex | 4 bytes break |  48 bytes filler | 4 bytes break | \r\n"
 
-```sh
+```
+sh
 [rahulsarda1@ip-172-31-90-35 ~]$ sudo -u hdfs time hadoop jar /opt/cloudera/parcels/CDH-5.9.3-1.cdh5.9.3.p0.4/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar teragen -Ddfs.block.size=33554432  -Dmapreduce.job.maps=4 1000000 /user/rahulsarda1/teragen
 17/10/11 01:12:51 INFO client.RMProxy: Connecting to ResourceManager at ip-172-31-90-35.ec2.internal/172.31.90.35:8032
 17/10/11 01:12:51 INFO terasort.TeraSort: Generating 1000000 using 4
@@ -113,8 +110,10 @@ Bytes Written=100000000
 ```
 
 # Terasort
+```
 time sudo -u hdfs hadoop jar /opt/cloudera/parcels/CDH-5.9.3-1.cdh5.9.3.p0.4/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar terasort /user/rahulsarda1/teragen /user/rahulsarda1/terasort
-```sh
+```
+```
 [rahulsarda1@ip-172-31-90-35 ~]$ time sudo -u hdfs hadoop jar /opt/cloudera/parcels/CDH-5.9.3-1.cdh5.9.3.p0.4/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar terasort /user/rahulsarda1/teragen /user/rahulsarda1/terasort
 17/10/11 01:21:04 INFO terasort.TeraSort: starting
 17/10/11 01:21:06 INFO input.FileInputFormat: Total input paths to process : 4
@@ -202,10 +201,3 @@ real    0m34.521s
 user    0m7.286s
 sys    0m0.288s
 ```
-
-
-
-
-
-
-
