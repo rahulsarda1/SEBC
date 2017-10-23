@@ -1,13 +1,13 @@
 # List the command and output for ls /etc/yum.repos.d in challenges/labs/1_cm.md
 
-```sh
+```
 [root@ip-172-31-88-148 ~]# ls /etc/yum.repos.d
 cloudera-manager.repo  redhat.repo  redhat-rhui-client-config.repo  redhat-rhui.repo  rhui-load-balancers.conf
 ```
 
 # The command and output for hdfs dfs -ls /user
 
-```sh
+```
 [root@ip-172-31-88-148 ~]# hdfs dfs -ls /user
 Found 8 items
 drwxrwxrwx   - jimenez     supergroup           0 2017-10-13 12:20 /user/beltran
@@ -19,10 +19,11 @@ drwxrwxrwx   - jimenez     supergroup           0 2017-10-13 12:20 /user/jimenez
 drwxrwxr-x   - oozie       oozie                0 2017-10-13 12:05 /user/oozie
 drwxr-xr-x   - rahulsarda1 rahulsarda1          0 2017-10-13 12:15 /user/rahulsarda1
 ```
+### mfernest: Wrong owner for `/user/beltran`
 
 # The command and output from the CM API call ../api/v5/hosts
 
-```sh
+```
 [root@ip-172-31-88-148 ~]# curl -u 'admin:admin' -X GET "http://52.91.69.236:7180/api/v5/hosts"
 {
 "items" : [ {
