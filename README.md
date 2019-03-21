@@ -1,19 +1,6 @@
-# <center>Services Enablement Boot Camp 
-# <center> AKA Field Channel Enablement Install/Ops
+# <center>Wipro CLoudera Install/Ops Enablement
+# 
 # <center> 
-
-This repository contains materials for Cloudera's Services Enablement
-Boot Camp and Cloudera FCE's internal boot camp.
-
-If you've received this repo as a ZIP file attachment, use the
-instructions in the email to create your class repo. You can make
-your GitHub repo Private if you wish, but it is not a free option.
-For that reason, most students choose to make their GitHub repository
-public.
-
-<strong>NOTE</strong>: DO NOT add files to your repository through
-the GitHub browser interface.
-
 
 Use GitHub only to receive your lab work by pushing from your local
 copy. Treat your GitHub repo like a backup to what is on your laptop.
