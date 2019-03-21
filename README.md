@@ -1,4 +1,4 @@
-# <center>Wipro CLoudera Install/Ops Enablement
+# <center>Wipro Cloudera Install/Ops Enablement
 # 
 # <center> 
 
